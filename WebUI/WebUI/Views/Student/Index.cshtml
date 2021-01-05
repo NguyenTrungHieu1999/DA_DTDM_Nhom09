@@ -1,0 +1,63 @@
+﻿@using WebUI.Models
+@model List<StudentVm>;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card mb-4">
+    <div class="card-header">
+        <a class="btn btn-success" href ="/Student/Insert">Insert Student</a>
+    </div>
+    <div class="card-header">
+        <i class="fas fa-table mr-1"></i>
+        Bảng thông tin sinh viên
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Tên đầy đủ</th>
+                        <th>Giới tính</th>
+                        <th>Ngày sinh</th>
+                        <th>Địa chỉ</th>
+                        <th>SĐT</th>
+                        <th>Trạng thái</th>
+                        <th>Tùy chọn</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Id</th>
+                        <th>Tên đầy đủ</th>
+                        <th>Giới tính</th>
+                        <th>Ngày sinh</th>
+                        <th>Địa chỉ</th>
+                        <th>SĐT</th>
+                        <th>Trạng thái</th>
+                        <th>Tùy chọn</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var i in Model)
+                    {
+                        <tr>
+                            <td>@i.Id</td>
+                            <td>@i.FullName</td>
+                            <td>@i.Gender</td>
+                            <td>@i.Birthdate</td>
+                            <td>@i.Address</td>
+                            <td>@i.Phone</td>
+                            <td>@(i.IsDelete ? "Disable" : "Active")</td>
+                            <td>
+                                <a class="btn btn-info" href="/Student/Edit/@i.Id">Edit</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
