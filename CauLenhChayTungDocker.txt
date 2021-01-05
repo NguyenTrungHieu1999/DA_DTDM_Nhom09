@@ -1,0 +1,30 @@
+Demo chương trình
+
+Tạo network tên là student-mysql dạng bridge
+docker network create student-mysql
+
+Tải image mysql 8 về docker
+docker pull mysql:8
+
+Chạy docker mysql 8, với tên là mysqldb, kết nối với network vừa tạo, password: root, tên database: studentmanager
+docker container run --name mysqldb --network student-mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=studentmanager -d mysql:8
+
+Truy cập vào MySQL container để kiểm tra xem đã kết nối mysql chưa
+docker exec -it mysqldb mysql -uroot -proot --default-character-set=utf8
+
+
+Cập nhật project Java để có thể kết nối với MySQL
+=>Maven update project
+=>Run as Maven install
+
+Tạo docker image có tên là student-jdbc
+docker image build -t student-jdbc .
+
+Khởi chạy docker container từ image vừa tạo
+docker container run --network student-mysql --name student-jdbc-container -p 8080:8080 -d student-jdbc
+
+Tạo Docker image có tên là web-dotnet
+docker build -t web-dotnet -f WebUI/Dockerfile .
+
+Khởi chạy docker container từ image vừa tạo
+docker run --network student-mysql --name web-ui -p 9000:80 web-dotnet
